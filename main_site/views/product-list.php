@@ -11,16 +11,25 @@
 <?php
 $category_id=isset($_GET['cat_id'])?$_GET['cat_id']:1;
 $limit=isset($_GET['limit'])?$_GET['limit']:21;
+$next_pagination=isset($_GET['next'])?$_GET['next']:0;
 $page_no=isset($_GET['page_no'])?$_GET['page_no']:1;
-
+$record_end=($limit*$page_no) ;
+$record_start=($page_no==1)?$page_no:$record_end-$limit;
+$pages_limit=9;
 $db_con= new DBConnect();
 $select_type_ids=isset($_GET["typ_ids"])?$_GET["typ_ids"]:"";
 $product_return= $db_con->getProductlist($category_id,$limit,$page_no,$select_type_ids);
 $type_list= $db_con->getTypeList($category_id);
-//print_r($_REQUEST);die;
+$cat_name= $db_con->getcatdetails($category_id);
+//print_r($_SERVER['DOCUMENT_ROOT']);die;
+$img_orignal_path="/panache_bil_git_hub/uploads/";
+$img_default_url="/../..".$img_orignal_path;
 $product_lists= $product_return['product_list'];
 $number_pages= $product_return['number_pages'];
-//print_r($number_pages);
+$total_records= $product_return['total_records'];
+$record_end=($total_records<$record_end)?$total_records:$record_end;
+$record_range=$record_start." -".$record_end;
+$server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
 $sel_type_ids_arr=array();
 if($select_type_ids!='') {
     $sel_type_ids_arr = explode(',', $select_type_ids);
@@ -32,11 +41,11 @@ if($select_type_ids!='') {
     <img src="../assets/images/banner-for-all2.jpg"
          class="img-responsive attachment-1920x447 size-1920x447" alt="img">
     <div class="banner-wrapper-inner">
-        <h1 class="page-title">Shop</h1>
+        <h1 class="page-title"><?= $cat_name; ?></h1>
         <div role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs">
             <ul class="trail-items breadcrumb">
                 <li class="trail-item trail-begin"><a href="index.html"><span>Home</span></a></li>
-                <li class="trail-item trail-end active"><span>Shop</span>
+                <li class="trail-item trail-end active"><span><?= $cat_name; ?></span>
                 </li>
             </ul>
         </div>
@@ -107,7 +116,12 @@ if($select_type_ids!='') {
                 <div class=" auto-clear equal-container better-height akasha-products">
                     <ul class="row products columns-3">
                         <?php foreach ($product_lists as $product ) {
-                            $product_name= $product['name']
+                            $product_name= $product['name'];
+                            $img_path="../assets/images/apro134-1-600x778.jpg";
+                            if($product['images']!='' && file_exists($server_dir_img.''.$product['images'])){
+                                //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
+                                $img_path= $img_default_url.''.$product['images'];
+                            }
                             ?>
                         <li class="product-item wow fadeInUp product-item rows-space-30 col-bg-4 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-ts-6 style-01 post-24 product type-product status-publish has-post-thumbnail product_cat-chair product_cat-table product_cat-new-arrivals product_tag-light product_tag-hat product_tag-sock first instock featured shipping-taxable purchasable product-type-variable has-default-attributes"
                             data-wow-duration="1s" data-wow-delay="0ms" data-wow="fadeInUp">
@@ -115,7 +129,7 @@ if($select_type_ids!='') {
                                 <div class="product-thumb">
                                     <a class="thumb-link" href="#">
                                         <img class="img-responsive"
-                                             src="<?= '/../../panache_bil_git_hub/uploads/'.$product['images']; ?>"
+                                             src="<?= $img_path; ?>"
                                              alt="<?= $product_name; ?>" width="600" height="778">
                                     </a>
                                     <div class="flash">
@@ -194,14 +208,25 @@ if($select_type_ids!='') {
                         <?php } ?>
                </ul>
                 </div>
+                <?php if($number_pages!=0){ ?>
                 <div class="shop-control shop-after-control">
                     <nav class="akasha-pagination">
                         <?php
                         $start_page=0;
-                        $end_page=10;
-                        if($page_no >10){
-                            $start_page=$start_page+$page_no;
-                            $end_page=$start_page+$page_no;
+                        $end_page=$pages_limit;
+
+                        //$next_pagination=1;
+                      //  if(isset($next_pagination) && $next_pagination!=0){
+                            $start_page=($pages_limit*$next_pagination);
+                            $end_page=$start_page+$pages_limit;
+                      //  }
+                         if($number_pages< ($pages_limit*(1+$next_pagination))){
+                            $end_page=$number_pages;
+                        }
+                         if($next_pagination!=0){
+                         ?>
+                         <a class="prev page-numbers" onclick="requestnext(<?= $next_pagination-1; ?>,<?= $start_page; ?>)">Prev</a>
+                        <?php
                         }
                         for($i=$start_page; $i<$end_page; $i++){
                             $page_number=$i+1;
@@ -210,13 +235,16 @@ if($select_type_ids!='') {
                             ?>
                         <span class="page-numbers current"><?= $page_number; ?> </span>
                                 <?php }else{ ?>
-                        <a class="page-numbers" ><?= $page_number; ?></a>
+                        <a class="page-numbers" onclick="gotpage(this)"><?= $page_number; ?></a>
 
                     <?php } } ?>
-                        <a class="next page-numbers" >Next</a>
+                        <?php if($number_pages > ($pages_limit*(1+$next_pagination))){ ?>
+                        <a class="next page-numbers" onclick="requestnext(<?= $next_pagination+1; ?>,<?= $end_page+1; ?>)">Next</a>
+                        <?php } ?>
                     </nav>
-                    <p class="akasha-result-count">Showing 1–12 of 20 results</p>
+                    <p class="akasha-result-count">Showing <?= $record_range ?> of <?= $total_records ?> results</p>
                 </div>
+                <?php } ?>
             </div>
             <div class="sidebar col-xl-3 col-lg-4 col-md-4 col-sm-12">
                 <div id="widget-area" class="widget-area shop-sidebar">
@@ -349,6 +377,16 @@ if($select_type_ids!='') {
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC3nDHy1dARR-Pa_2jjPCjvsOR4bcILYsM'></script>
 <script src="../assets/js/functions.js"></script>
 <script type="application/javascript">
+    function requestnext(page_next,page_number){
+        var newUrl= changeurl("next",page_next);
+        newUrl= changeurl("page_no",page_number,newUrl);
+        window.location.href =newUrl;
+    }
+    function gotpage(page_link){
+        var page_number= $(page_link).html();
+        var newUrl = changeurl("page_no",page_number);
+         window.location.href =newUrl;
+    }
     function change_type(req_li) {
         if($(req_li).hasClass("current-cat")){
             $(req_li).removeClass("current-cat");
@@ -368,20 +406,26 @@ if($select_type_ids!='') {
         //if(type_selected!=""){
             type_selected=type_selected.slice(0,-1);
             console.log(type_selected);
-            var newurl= changeurl("typ_ids",type_selected);
-            console.log(newurl);
-          window.location.href = newurl;
+           var  newUrl= changeurl("typ_ids",type_selected);
+           window.location.href =newUrl;
        // }
     }
-    function changeurl(param,param_value) {
-        var currentUrl = window.location.href;
+    function changeurl(param,param_value,currentUrl="") {
+        if(currentUrl==""){
+            currentUrl = window.location.href;
+        }
 var url = new URL(currentUrl);
+if(param=="typ_ids"){
+    url.searchParams.delete("page_no")
+    url.searchParams.delete("next")
+}
 if(param_value!='') {
     url.searchParams.set(param, param_value); // setting your param
 }else{
     url.searchParams.delete(param)
 }
 var newUrl = url.href;
+//console.log(newUrl)
 
 return newUrl;
     }

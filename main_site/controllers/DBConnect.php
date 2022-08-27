@@ -22,7 +22,11 @@ class DBConnect
     }
     function getProductlist($category,$limit=21,$page_no=1,$type_ids=""){
         $this->connectdb();
-        $offset=$page_no * $limit;
+        $offset=0;
+        if($page_no!=1){
+             $offset=($page_no-1) * ($limit);
+        }
+
         $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and category_id= ". $category;
         if($type_ids!=""){
             $where_con= $where_con." and type_id IN (".$type_ids.") ";
@@ -33,12 +37,14 @@ class DBConnect
         $product_list = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         $sql_count = 'SELECT count(*) cnt_total FROM `item_master` '.$where_con;
-//print_r($sql);die;
+//print_r($sql_count);die;
         $statement_count = $this->conn->query($sql_count);
         $product_count= $statement_count->fetchAll(PDO::FETCH_ASSOC);
         //print_r($product_count);die;
-        $number_pages=(int)$product_count[0]['cnt_total']/$limit;
-        return ['product_list'=>$product_list,'number_pages'=>$number_pages];
+        $total_records=$product_count[0]['cnt_total'];
+        $number_pages=ceil($total_records/$limit);
+
+        return ['product_list'=>$product_list,'number_pages'=>$number_pages,'total_records'=>$total_records];
     }
       function getTypeList($category){
         $this->connectdb();
@@ -54,9 +60,18 @@ print_r($type_list);*/
 
         $statement_product = $this->conn->query($sql_product);
         $type_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
-
+//print_r($sql_product);die;
       /*  print_r($product_list);
         print_r(array_combine($type_list,$product_list));die;*/
         return $type_list;
+    }
+    function  getcatdetails($category){
+        $this->connectdb();
+        $where_con_product=  "where id= ". $category;
+        $sql_product = 'SELECT * FROM `category_master`  '.$where_con_product.' ';
+
+        $statement_product = $this->conn->query($sql_product);
+        $type_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
+        return $type_list[0]['name'];
     }
 }
