@@ -46,6 +46,53 @@ class DBConnect
 
         return ['product_list'=>$product_list,'number_pages'=>$number_pages,'total_records'=>$total_records];
     }
+       function getrelatedProductlist($category,$type_ids="",$limit=10){
+        $this->connectdb();
+        $offset=0;
+
+
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and category_id= ". $category;
+        if($type_ids!=""){
+            $where_con= $where_con." and type_id IN (".$type_ids.") ";
+        }
+        $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
+//print_r($sql);die;
+        $statement = $this->conn->query($sql);
+        $product_list = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return ['product_list'=>$product_list,'number_pages'=>0,'total_records'=>0];
+    }
+    function getBestSellers($limit=10){
+        $this->connectdb();
+        $offset=0;
+
+
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 ";
+
+        $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
+//print_r($sql);die;
+        $statement = $this->conn->query($sql);
+        $product_list = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return ['product_list'=>$product_list,'number_pages'=>0,'total_records'=>0];
+    }
+     function getNewArrival($limit=10){
+        $this->connectdb();
+        $offset=0;
+
+
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 ";
+
+        $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
+//print_r($sql);die;
+        $statement = $this->conn->query($sql);
+        $product_list = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return ['product_list'=>$product_list,'number_pages'=>0,'total_records'=>0];
+    }
       function getTypeList($category){
         $this->connectdb();
     /*    $where_con=  "where  category_id= ". $category;
@@ -73,5 +120,15 @@ print_r($type_list);*/
         $statement_product = $this->conn->query($sql_product);
         $type_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
         return $type_list[0]['name'];
+    }
+    function getproductDetails($prod_id){
+        $this->connectdb();
+         $where_con=  "where item_master.id= ". $prod_id;
+          $sql_product = 'SELECT item_master.*,category_master.name as cat_name,type_master.name as type_name FROM `item_master` left join  category_master on item_master.category_id=category_master.id left join `type_master` on type_id=type_master.id  '.$where_con.' ';
+
+        $statement_product = $this->conn->query($sql_product);
+        $type_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
+
+        return $type_list;
     }
 }

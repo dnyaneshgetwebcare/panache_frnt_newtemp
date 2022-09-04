@@ -10,11 +10,13 @@
 <body>
 <?php
 $category_id=isset($_GET['cat_id'])?$_GET['cat_id']:1;
+$view_type=isset($_GET['vw'])?$_GET['vw']:"g";
 $limit=isset($_GET['limit'])?$_GET['limit']:21;
 $next_pagination=isset($_GET['next'])?$_GET['next']:0;
 $page_no=isset($_GET['page_no'])?$_GET['page_no']:1;
 $record_end=($limit*$page_no) ;
 $record_start=($page_no==1)?$page_no:$record_end-$limit;
+$def_product_url="product-details.php?prod_id=";
 $pages_limit=9;
 $db_con= new DBConnect();
 $select_type_ids=isset($_GET["typ_ids"])?$_GET["typ_ids"]:"";
@@ -58,8 +60,8 @@ if($select_type_ids!='') {
                 <div class="shop-control shop-before-control">
                     <div class="grid-view-mode">
                         <form>
-                            <a href="shop.html" data-toggle="tooltip" data-placement="top"
-                                    class="modes-mode mode-grid display-mode active" value="grid">
+                            <a  data-toggle="tooltip" data-placement="top"
+                                    class="modes-mode mode-grid display-mode <?= ($view_type=='g')?'active':''; ?>" value="grid" onclick="setview('g',this)">
                                 <span class="button-inner">
                                     Shop Grid
                                     <span></span>
@@ -67,8 +69,8 @@ if($select_type_ids!='') {
                                     <span></span>
                                 </span>
                             </a>
-                            <a href="shop-list.html" data-toggle="tooltip" data-placement="top"
-                                    class="modes-mode mode-list display-mode " value="list">
+                            <a  data-toggle="tooltip" data-placement="top"
+                                    class="modes-mode mode-list display-mode <?= ($view_type=='l')?'active':''; ?>" value="list" onclick="setview('l',this)">
                                 <span class="button-inner">
                                     Shop List
                                     <span></span>
@@ -82,14 +84,14 @@ if($select_type_ids!='') {
                         <select title="product_cat" name="orderby" class="orderby">
                             <option value="menu_order" selected="selected">Default sorting</option>
                             <option value="popularity">Sort by popularity</option>
-                            <option value="rating">Sort by average rating</option>
+                         <!--   <option value="rating">Sort by average rating</option>-->
                             <option value="date">Sort by latest</option>
                             <option value="price">Sort by price: low to high</option>
                             <option value="price-desc">Sort by price: high to low</option>
                         </select>
                     </form>
                     <form class="per-page-form">
-                        <label>
+                      <!--  <label>
                             <select class="option-perpage">
                                 <option value="12" selected="">
                                     Show 12
@@ -110,104 +112,13 @@ if($select_type_ids!='') {
                                     Show All
                                 </option>
                             </select>
-                        </label>
+                        </label>-->
                     </form>
                 </div>
-                <div class=" auto-clear equal-container better-height akasha-products">
-                    <ul class="row products columns-3">
-                        <?php foreach ($product_lists as $product ) {
-                            $product_name= $product['name'];
-                            $img_path="../assets/images/apro134-1-600x778.jpg";
-                            if($product['images']!='' && file_exists($server_dir_img.''.$product['images'])){
-                                //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
-                                $img_path= $img_default_url.''.$product['images'];
-                            }
-                            ?>
-                        <li class="product-item wow fadeInUp product-item rows-space-30 col-bg-4 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-ts-6 style-01 post-24 product type-product status-publish has-post-thumbnail product_cat-chair product_cat-table product_cat-new-arrivals product_tag-light product_tag-hat product_tag-sock first instock featured shipping-taxable purchasable product-type-variable has-default-attributes"
-                            data-wow-duration="1s" data-wow-delay="0ms" data-wow="fadeInUp">
-                            <div class="product-inner tooltip-left">
-                                <div class="product-thumb">
-                                    <a class="thumb-link" href="#">
-                                        <img class="img-responsive"
-                                             src="<?= $img_path; ?>"
-                                             alt="<?= $product_name; ?>" width="600" height="778">
-                                    </a>
-                                    <div class="flash">
-                                        <span class="onnew"><span class="text">New</span></span></div>
-                                    <form class="variations_form cart">
-                                        <table class="variations">
-                                            <tbody>
-                                            <tr>
-                                                <td class="value">
-                                                 <!--   <select title="box_style" data-attributetype="box_style" data-id="pa_color"
-                                                            class="attribute-select " name="attribute_pa_color"
-                                                            data-attribute_name="attribute_pa_color"
-                                                            data-show_option_none="yes">
-                                                        <option data-type="" data-pa_color="" value="">Choose an
-                                                            option
-                                                        </option>
-                                                        <option data-width="30" data-height="30" data-type="color"
-                                                                data-pa_color="#3155e2" value="blue"
-                                                                class="attached enabled">Blue
-                                                        </option>
-                                                        <option data-width="30" data-height="30" data-type="color"
-                                                                data-pa_color="#49aa51" value="green"
-                                                                class="attached enabled">Green
-                                                        </option>
-                                                        <option data-width="30" data-height="30" data-type="color"
-                                                                data-pa_color="#ff63cb" value="pink"
-                                                                class="attached enabled">Pink
-                                                        </option>
-                                                    </select>-->
-                                                    <div class="data-val attribute-pa_color"
-                                                         data-attributetype="box_style"><a class="change-value color"
-                                                                                           href="#"
-                                                                                           style="background: #3155e2;"
-                                                                                           data-value="blue"></a><a
-                                                            class="change-value color" href="#"
-                                                            style="background: #49aa51;" data-value="green"></a><a
-                                                            class="change-value color" href="#"
-                                                            style="background: #ff63cb;" data-value="pink"></a></div>
-                                                    <a class="reset_variations" href="#" style="visibility: hidden;">Clear</a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                    <div class="group-button">
-                                        <div class="yith-wcwl-add-to-wishlist">
-                                            <div class="yith-wcwl-add-button show">
-                                                <a href="#" class="add_to_wishlist">Add to Wishlist</a>
-                                            </div>
-                                        </div>
-                                        <div class="akasha product compare-button">
-                                            <a href="#" class="compare button">Compare</a>
-                                        </div>
-                                        <a href="#" class="button yith-wcqv-button">Quick View</a>
-                                        <div class="add-to-cart">
-                                            <a href="#" class="button product_type_variable add_to_cart_button">Select
-                                                options</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-info equal-elem">
-                                    <h3 class="product-name product_title">
-                                        <a href="#"> <?= $product_name; ?></a>
-                                    </h3>
-                                    <div class="rating-wapper nostar">
-                                        <div class="star-rating"><span style="width:0%">Rated <strong
-                                                class="rating">0</strong> out of 5</span></div>
-                                        <span class="review">(0)</span></div>
-                                    <span class="price"><span class="akasha-Price-amount amount"><span
-                                            class="akasha-Price-currencySymbol">$</span>45.00</span> – <span
-                                            class="akasha-Price-amount amount"><span
-                                            class="akasha-Price-currencySymbol">$</span>54.00</span></span>
-                                </div>
-                            </div>
-                        </li>
-                        <?php } ?>
-               </ul>
-                </div>
+                <?php
+                $view_name=($view_type=="l")?"prod_list.php":"prod_grid.php";
+
+                include($view_name); ?>
                 <?php if($number_pages!=0){ ?>
                 <div class="shop-control shop-after-control">
                     <nav class="akasha-pagination">
@@ -410,6 +321,13 @@ if($select_type_ids!='') {
            window.location.href =newUrl;
        // }
     }
+    function setview(view_type,el){
+       if(!$(el).hasClass('active')) {
+           var newUrl = changeurl("vw", view_type);
+           window.location.href = newUrl;
+       }
+    }
+
     function changeurl(param,param_value,currentUrl="") {
         if(currentUrl==""){
             currentUrl = window.location.href;
