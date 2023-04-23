@@ -1,13 +1,22 @@
 <?php
-
+include("ConfigDetails.php");
 class DBConnect
 {
 
+public $conn = null;
     public $servername = "localhost";
     public $username = "root";
     public $password = "";
-    public $conn = null;
+
     public $billing_sever_folder='panache_bill';
+public $conig_details;
+    function  __construct(){
+        $conig_details=new ConfigDetails();
+        $servername = $conig_details->servername;
+        $username = $conig_details->username;
+        $password = $conig_details->password;
+        $billing_sever_folder = $conig_details->billing_sever_folder;
+    }
     function connectdb()
     {
         if($this->conn==null) {
