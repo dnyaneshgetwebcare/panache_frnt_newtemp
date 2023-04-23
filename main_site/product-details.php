@@ -3,10 +3,14 @@
 $product_id=isset($_GET['prod_id'])?$_GET['prod_id']:2;
 $db_con= new DBConnect();
 $product_details= $db_con->getproductDetails($product_id)[0];
-$related_products=$db_con->getrelatedProductlist($product_details['category_id'],$product_details['type_id'])['product_list'];
+$img_lists= $db_con->getImageList($product_id);
+$related_products_return=$db_con->getrelatedProductlist($product_details['category_id'],$product_details['type_id']);
 //print_r($product_details);
+$related_products=$related_products_return['product_list'];
+$related_products_imgs=$related_products_return['image_list'];
  $def_product_url="product-details.php?prod_id=";
-$img_orignal_path="/panache_bil_git_hub/uploads/";
+$img_path1= $db_con->getImagePath();
+$img_orignal_path="/panache_bill/uploads/";
 $img_default_url="/..".$img_orignal_path;
 $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
 ?>
@@ -27,11 +31,11 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
     </div>
 </div>
 <?php
- $img_path1="assets/images/apro131-2.jpg";
+/* $img_path1="assets/images/apro131-2.jpg";
                             if($product_details['images']!='' && file_exists($server_dir_img.''.$product_details['images'])){
                                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
                                 $img_path1= $img_default_url.''.$product_details['images'];
-                            }
+                            }*/
 ?>
 <div class="single-thumb-vertical main-container shop-page no-sidebar">
     <div class="container">
@@ -47,10 +51,18 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                     <a href="#" class="akasha-product-gallery__trigger"></a>
                                     <div class="flex-viewport">
                                         <figure class="akasha-product-gallery__wrapper">
+                                            <?php
+
+                                            foreach ($img_lists as $img_list ) {
+
+                                                $img_path1= $db_con->getImagePath($img_list['img_name']);
+                                                //print_r($img_path1);die;
+                                                ?>
                                             <div class="akasha-product-gallery__image">
                                                 <img alt="img"
                                                      src="<?= $img_path1; ?>">
                                             </div>
+                                           <?php } ?>
                                           <!--  <div class="akasha-product-gallery__image">
                                                 <img src="assets/images/apro134-1.jpg"
                                                      alt="img">
@@ -66,10 +78,16 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                         </figure>
                                     </div>
                                     <ol class="flex-control-nav flex-control-thumbs">
-                                        <li><img
+                                        <?php foreach ($img_lists as $img_list ) {
+                                            $img_path1= $db_con->getImagePath($img_list['img_name']);
+                                            ?>
+                                        <li>
+
+                                            <img
                                                 src="<?= $img_path1; ?>"
                                                 alt="img">
                                         </li>
+                                        <?php } ?>
                                    <!--     <li><img
                                                 src="assets/images/apro134-1-100x100.jpg"
                                                 alt="img">
@@ -288,6 +306,10 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
                                 $img_path= $img_default_url.''.$product['images'];
                             }
+                       /* $img_path = $db_con->getImagePath();
+                        if(isset($related_products_imgs[$product['id']])  && $related_products_imgs[$product['id']]!=''){
+                            $img_path = $db_con->getImagePath($related_products_imgs[$product['id']]);
+                        }*/
                         ?>
                     <div class="product-item style-01 post-27 product type-product status-publish has-post-thumbnail product_cat-table product_cat-new-arrivals product_cat-lamp product_tag-table product_tag-sock  instock shipping-taxable purchasable product-type-variable has-default-attributes ">
                         <div class="product-inner tooltip-left">

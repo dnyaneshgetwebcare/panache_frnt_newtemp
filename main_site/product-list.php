@@ -24,11 +24,12 @@ $product_return= $db_con->getProductlist($category_id,$limit,$page_no,$select_ty
 $type_list= $db_con->getTypeList($category_id);
 $cat_name= $db_con->getcatdetails($category_id);
 //print_r($_SERVER['DOCUMENT_ROOT']);die;
-$img_orignal_path="/panache_bil_git_hub/uploads/";
+$img_orignal_path="/panache_bill/uploads/";
 $img_default_url="/..".$img_orignal_path;
 $product_lists= $product_return['product_list'];
 $number_pages= $product_return['number_pages'];
 $total_records= $product_return['total_records'];
+//$image_list= $product_return['image_list'];
 $record_end=($total_records<$record_end)?$total_records:$record_end;
 $record_range=$record_start." -".$record_end;
 $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;

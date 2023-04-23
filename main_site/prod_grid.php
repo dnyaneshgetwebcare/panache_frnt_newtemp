@@ -2,13 +2,19 @@
                     <ul class="row products columns-3">
                         <?php foreach ($product_lists as $product ) {
                             $product_name= $product['name'];
-                            $img_path="assets/images/apro134-1-600x778.jpg";
+                            /*$img_path="assets/images/apro134-1-600x778.jpg";
                             $img_path= $img_default_url.''.$product['images'];
                             if($product['images']!='' && file_exists($server_dir_img.''.$product['images'])){
                                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
                                 $img_path= $img_default_url.''.$product['images'];
-                            }
+                            }*/
+
+                           // $img_path = $db_con->getImagePathList($image_list,$product['id']);
+                            //echo $product['images'];
+                            $img_path= $db_con->getImagePath($product['images'],array('width'=>600,'height'=>766));
+                            //echo "new >> ".$img_path;
                             $product_url=$def_product_url.''.$product['id'];
+
                             ?>
                         <li class="product-item wow fadeInUp product-item rows-space-30 col-bg-4 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-ts-6 style-01 post-24 product type-product status-publish has-post-thumbnail product_cat-chair product_cat-table product_cat-new-arrivals product_tag-light product_tag-hat product_tag-sock first instock featured shipping-taxable purchasable product-type-variable has-default-attributes"
                             data-wow-duration="1s" data-wow-delay="0ms" data-wow="fadeInUp">
