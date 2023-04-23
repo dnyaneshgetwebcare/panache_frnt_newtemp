@@ -46,7 +46,7 @@ if($select_type_ids!='') {
         <h1 class="page-title"><?= $cat_name; ?></h1>
         <div role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs">
             <ul class="trail-items breadcrumb">
-                <li class="trail-item trail-begin"><a href="index.html"><span>Home</span></a></li>
+                <li class="trail-item trail-begin"><a href="index.php"><span>Home</span></a></li>
                 <li class="trail-item trail-end active"><span><?= $cat_name; ?></span>
                 </li>
             </ul>
@@ -80,16 +80,16 @@ if($select_type_ids!='') {
                             </a>
                         </form>
                     </div>
-                    <form class="akasha-ordering" method="get">
+                    <!--<form class="akasha-ordering" method="get">
                         <select title="product_cat" name="orderby" class="orderby">
                             <option value="menu_order" selected="selected">Default sorting</option>
                             <option value="popularity">Sort by popularity</option>
-                         <!--   <option value="rating">Sort by average rating</option>-->
+
                             <option value="date">Sort by latest</option>
                             <option value="price">Sort by price: low to high</option>
                             <option value="price-desc">Sort by price: high to low</option>
                         </select>
-                    </form>
+                    </form>-->
                     <form class="per-page-form">
                       <!--  <label>
                             <select class="option-perpage">
@@ -179,7 +179,7 @@ if($select_type_ids!='') {
                          <?php  } ?>
                         </ul>
                     </div>
-                    <div id="akasha_price_filter-2" class="widget akasha widget_price_filter"><h2
+                 <!--   <div id="akasha_price_filter-2" class="widget akasha widget_price_filter"><h2
                             class="widgettitle">Filter By Price<span class="arrow"></span></h2>
                         <form method="get" action="#">
                             <div class="price_slider_wrapper">
@@ -194,8 +194,8 @@ if($select_type_ids!='') {
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div id="akasha_akasha_layered_nav-4"
+                    </div>-->
+                  <!--  <div id="akasha_akasha_layered_nav-4"
                          class="widget akasha_widget_layered_nav widget_layered_nav">
                         <h2 class="widgettitle">Filter By Color<span class="arrow"></span></h2>
                         <div class="color-group">
@@ -232,8 +232,8 @@ if($select_type_ids!='') {
                                 <span class="term-name">Yellow</span>
                                 <span class="count">(2)</span> </a>
                         </div>
-                    </div>
-                    <div id="akasha_layered_nav-6"
+                    </div>-->
+                <!--    <div id="akasha_layered_nav-6"
                          class="widget akasha widget_layered_nav akasha-widget-layered-nav"><h2
                             class="widgettitle">Filter By Size<span class="arrow"></span></h2>
                         <ul class="akasha-widget-layered-nav-list">
@@ -262,7 +262,7 @@ if($select_type_ids!='') {
                                 <a rel="nofollow" href="#">4XL</a>
                                 <span class="count">(3)</span></li>
                         </ul>
-                    </div>
+                    </div>-->
 
                 </div><!-- .widget-area -->
             </div>

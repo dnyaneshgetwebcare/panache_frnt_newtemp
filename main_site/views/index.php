@@ -5,8 +5,10 @@ $db_con= new DBConnect();
 
 $result=$db_con->getBestSellers();
 $best_sellers=$result['product_list'];
+$best_sellers_img=$result['image_list'];
 $result_ar=$db_con->getNewArrival();
 $new_arrivals=$result_ar['product_list'];
+$new_arrivals_img=$result_ar['image_list'];
 //print_r($product_details);
  $def_product_url="product-details.php?prod_id=";
 $img_orignal_path="/panache_bil_git_hub/uploads/";
@@ -34,9 +36,9 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="container">
                         <div class="slide-inner">
                             <h5>Limited Colletion</h5>
-                            <h1>Dreamy</h1>
-                            <h2>& Lovely</h2>
-                            <a href="#">Shop now</a>
+                            <h1>Women</h1>
+                            <h2> Wears</h2>
+                            <a href="product-list.php?cat_id=2">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -46,10 +48,10 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                 <div class="slide-info">
                     <div class="container">
                         <div class="slide-inner">
-                            <h5>Best Selling</h5>
-                            <h1><span>Glamorous</h1>
-                            <h2>& Cute</h2>
-                            <a href="#">Shop now</a>
+                            <h5>Exclusive</h5>
+                            <h1><span>Lengha</h1>
+                            <h2>for Wedding</h2>
+                            <a href="product-list.php?cat_id=2">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -59,10 +61,10 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                 <div class="slide-info">
                     <div class="container">
                         <div class="slide-inner">
-                            <h5>This Week Only</h5>
-                            <h1>Mega Sale</h1>
-                            <h2>50% Off</h2>
-                            <a href="#">Shop now</a>
+                            <h5>Wedding</h5>
+                            <h1>Mens</h1>
+
+                            <a href="product-list.php?cat_id=1">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -82,7 +84,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 <div class="banner-content">
                                     <div class="title-wrap">
                                         <h6 class="title">
-                                            <a target="_self" href="#">Hoodie</a>
+                                            <a target="_self" href="product-list.php?cat_id=2">Womens</a>
                                         </h6>
                                     </div>
                                     <div class="button-wrap">
@@ -102,7 +104,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 <div class="banner-content">
                                     <div class="title-wrap">
                                         <h6 class="title">
-                                            <a target="_self" href="#">Glasses</a>
+                                            <a target="_self" href="product-list.php?cat_id=1">Mens</a>
                                         </h6>
                                     </div>
                                     <div class="button-wrap">
@@ -120,7 +122,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 <div class="banner-content">
                                     <div class="title-wrap">
                                         <h6 class="title">
-                                            <a target="_self" href="#">Beanie</a>
+                                            <a target="_self" href="product-list.php?cat_id=3">Jewellery/Accessories</a>
                                         </h6>
                                     </div>
                                     <div class="button-wrap">
@@ -137,9 +139,8 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
         <div class="container">
             <div class="akasha-heading style-01">
                 <div class="heading-inner">
-                    <h3 class="title">Best Seller</h3>
-                    <div class="subtitle">Made with care for your little ones, our products are perfect for every
-                        occasion. Check it out.
+                    <h3 class="title">Pre-Wedding </h3>
+                    <div class="subtitle">Made easy for selection of outfit for Pre-Wedding.
                     </div>
                 </div>
             </div>
@@ -149,11 +150,12 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                      data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
                     <?php foreach ($best_sellers as $best_seller){
                             $product_name= $best_seller['name'];
-                            $img_path="../assets/images/apro134-1-600x778.jpg";
+                           /* $img_path="../assets/images/apro134-1-600x778.jpg";
                             if($best_seller['images']!='' && file_exists($server_dir_img.''.$best_seller['images'])){
                                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
                                 $img_path= $img_default_url.''.$best_seller['images'];
-                            }
+                            }*/
+                        $img_path=$db_con->getImagePath($best_seller['images']);
                             $product_url=$def_product_url.''.$best_seller['id'];
                         ?>
                     <div class="product-item featured_products style-02 rows-space-30 post-34 product type-product status-publish has-post-thumbnail product_cat-light product_cat-new-arrivals product_tag-light product_tag-hat product_tag-sock first instock sale featured shipping-taxable product-type-grouped">
@@ -178,9 +180,9 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                        tabindex="0"><?= $product_name; ?></a>
                                 </h3>
                                 <span class="price"><span class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">$</span>79.00</span> – <span
+                                        class="akasha-Price-currencySymbol">₹</span><?= $best_seller['rent_amount'] ?>  </span> <!--– <span
                                         class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">$</span>139.00</span></span>
+                                        class="akasha-Price-currencySymbol">₹</span>139.00</span>--></span>
                             </div>
                             <div class="group-button clearfix">
                                 <div class="yith-wcwl-add-to-wishlist">
@@ -210,14 +212,14 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="banner-content">
                         <div class="title-wrap">
                             <div class="banner-label">
-                                Modern Glasses
+                                Occasion
                             </div>
                             <h6 class="title">
-                                Best Seller </h6>
+                                Pre-Wedding </h6>
                         </div>
                         <div class="button-wrap">
                             <div class="subtitle">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit justo
+                                Once in a while, Right in the middle of an ordinary life, Love gives us a fairy tale.
                             </div>
                             <a class="button" target="_self" href="#"><span>Shop now</span></a>
                         </div>
@@ -242,11 +244,12 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                      data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
                      <?php foreach ($new_arrivals as $new_arrival){
                             $product_name= $new_arrival['name'];
-                            $img_path="../assets/images/apro134-1-600x778.jpg";
+                            /*$img_path="../assets/images/apro134-1-600x778.jpg";
                             if($new_arrival['images']!='' && file_exists($server_dir_img.''.$new_arrival['images'])){
                                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
                                 $img_path= $img_default_url.''.$new_arrival['images'];
-                            }
+                            }*/
+                         $img_path=$db_con->getImagePath($new_arrival['images']);
                             $product_url=$def_product_url.''.$new_arrival['id'];
                         ?>
                     <div class="product-item recent-product style-01 rows-space-0 post-93 product type-product status-publish has-post-thumbnail product_cat-light product_cat-table product_cat-new-arrivals product_tag-table product_tag-sock first instock shipping-taxable purchasable product-type-simple  ">
@@ -283,7 +286,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                             class="rating">0</strong> out of 5</span></div>
                                     <span class="review">(0)</span></div>-->
                                 <span class="price"><span class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">$</span>109.00</span></span>
+                                        class="akasha-Price-currencySymbol">₹</span><?= $new_arrival['rent_amount'] ?></span></span>
                             </div>
                         </div>
                     </div>
@@ -302,17 +305,17 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="banner-content">
                         <div class="title-wrap">
                             <div class="banner-label">
-                                30 Nov - 03 Dec
+
                             </div>
                             <h6 class="title">
                                 New Collection </h6>
                         </div>
                         <div class="cate">
-                            50% Off / Selected items
+
                         </div>
                         <div class="button-wrap">
                             <div class="subtitle">
-                                Mus venenatis habitasse leo malesuada lacus commodo faucibus torquent donec
+                                Panache Rental has got new exclusive collection for you.
                             </div>
                             <a class="button" target="_self" href="#"><span>Shop now</span></a>
                         </div>
@@ -332,9 +335,8 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 <span class="flaticon-rocket-ship"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">Worldwide Delivery</h4>
-                                <div class="desc">With sites in 5 languages, we ship to over 200 countries &amp;
-                                    regions.
+                                <h4 class="title">Cleanliness and Hygiene</h4>
+                                <div class="desc">Cleanliness and hygiene is maintance at store.
                                 </div>
                             </div>
                         </div>
@@ -347,8 +349,8 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 <span class="flaticon-padlock"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">Safe Shipping</h4>
-                                <div class="desc">Pay with the world’s most popular and secure payment methods.</div>
+                                <h4 class="title">Safe Deposite</h4>
+                                <div class="desc">Deposite will be applicable as per policy for safety purpose.</div>
                             </div>
                         </div>
                     </div>
@@ -360,8 +362,8 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                 <span class="flaticon-recycle"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">365 Days Return</h4>
-                                <div class="desc">Round-the-clock assistance for a smooth shopping experience.</div>
+                                <h4 class="title">3 Days Return</h4>
+                                <div class="desc">Pick up outfit before your event, use it on event day and return next day of event.</div>
                             </div>
                         </div>
                     </div>

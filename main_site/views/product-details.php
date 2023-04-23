@@ -21,7 +21,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
 <?php include("menu.php"); ?>
 <div class="banner-wrapper no_background" style="padding-top: 80px;">
     <div class="banner-wrapper-inner">
-        <nav class="akasha-breadcrumb"><a href="index.html">Home</a><i class="fa fa-angle-right"></i><a href="#">Shop</a>
+        <nav class="akasha-breadcrumb"><a href="index.php">Home</a><i class="fa fa-angle-right"></i><a href="#">Shop</a>
             <i class="fa fa-angle-right"></i><?= $product_details['name']; ?>
         </nav>
     </div>
@@ -90,9 +90,9 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                     <span class="onnew"><span class="text">New</span></span></div>
                                 <h1 class="product_title entry-title"><?= $product_details['name']; ?></h1>
                                 <p class="price"><span class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">$</span>146.00</span> – <span
+                                        class="akasha-Price-currencySymbol">₹</span><?= $product_details['rent_amount']; ?></span> <!--– <span
                                         class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">$</span>185.00</span></p>
+                                        class="akasha-Price-currencySymbol">₹</span>185.00</span>--></p>
                                <!-- <p class="stock in-stock">
                                     Availability: <span> In stock</span>
                                 </p>-->
@@ -104,7 +104,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                         <li>Subtle branding and diagonal panel detail</li>
                                     </ul>-->
                                 </div>
-                                <form class="variations_form cart">
+                                <!--<form class="variations_form cart">
                                     <table class="variations">
                                         <tbody>
                                         <tr>
@@ -168,14 +168,14 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                             <input name="variation_id" class="variation_id" value="0" type="hidden">
                                         </div>
                                     </div>
-                                </form>
-                                <div class="yith-wcwl-add-to-wishlist">
+                                </form>-->
+                               <!-- <div class="yith-wcwl-add-to-wishlist">
                                     <div class="yith-wcwl-add-button show">
                                         <a href="#" rel="nofollow"
                                            data-product-id="27" data-product-type="variable" class="add_to_wishlist">
                                             Add to Wishlist</a>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="clear"></div>
                                <!-- <a href="#"
                                    class="compare button" data-product_id="27" rel="nofollow">Compare</a>-->
@@ -192,15 +192,16 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                             </li>
                                         </ul>
                                     </div>-->
-                                    <span class="sku_wrapper">SKU: <span class="sku">885B712</span></span>
-                                    <span class="posted_in">Categories: <a
+                                    <span class="sku_wrapper">Category: <span class="sku"><?= $product_details['cat_name']; ?></span></span>
+                                    <span class="posted_in">Type:  <?= $product_details['type_name']; ?><!--<a
                                             href="#"
                                             rel="tag">Bags</a>, <a
                                             href="#" rel="tag">New arrivals</a>, <a
-                                            href="#" rel="tag">Summer Sale</a></span>
-                                    <span class="tagged_as">Tags: <a href="#"
+                                            href="#" rel="tag">Summer Sale</a></span>-->
+
+                                    <!--<span class="tagged_as">Tags: <a href="#"
                                                                      rel="tag">Bags</a>, <a
-                                            href="#" rel="tag">Sock</a></span>
+                                            href="#" rel="tag">Sock</a></span>-->
                                 </div>
                                 <div class="akasha-share-socials">
                                     <h5 class="social-heading">Share: </h5>
@@ -298,7 +299,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                          alt="<?= $product_name; ?>" width="600" height="778">
                                 </a>
                                 <div class="flash"><span class="onnew"><span class="text">New</span></span></div>
-                                <div class="group-button">
+                               <!-- <div class="group-button">
                                     <div class="yith-wcwl-add-to-wishlist">
                                         <div class="yith-wcwl-add-button show">
                                             <a href="#" class="add_to_wishlist">Add to Wishlist</a>
@@ -312,19 +313,19 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                         <a href="#" class="button product_type_variable add_to_cart_button">Add to
                                             cart</a>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="product-info equal-elem">
                                 <h3 class="product-name product_title">
                                     <a href="<?= $product_url; ?>"
                                        tabindex="0"><?= $product_name; ?></a>
                                 </h3>
-                                <div class="rating-wapper nostar">
+                               <!-- <div class="rating-wapper nostar">
                                     <div class="star-rating"><span style="width:0%">Rated <strong
                                             class="rating">0</strong> out of 5</span></div>
-                                    <span class="review">(0)</span></div>
+                                    <span class="review">(0)</span></div>-->
                                 <span class="price"><span class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">$</span>60.00</span></span>
+                                        class="akasha-Price-currencySymbol">₹</span> <?= $product['rent_amount']; ?></span> <!--(Deposite: <?/*= $product['deposit_amount']; */?> )--></span>
                             </div>
                         </div>
                     </div>

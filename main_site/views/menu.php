@@ -17,7 +17,7 @@
                     </div>
                     <div class="header-logo-nav">
                         <div class="header-logo">
-                            <a href="index.html"><img alt="Akasha" src="../assets/images/logo.png"
+                            <a href="index.php"><img alt="Panache" src="../assets/images/logo.png"
                                                       class="logo"></a></div>
                         <div class="box-header-nav menu-nocenter">
                             <ul id="menu-primary-menu"
@@ -88,16 +88,16 @@
 
                                 <li id="menu-item-237"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-237 parent">
-                                    <a class="akasha-menu-item-title" title="Pages" href="product-list.php">Contact Us</a>
+                                    <a class="akasha-menu-item-title" title="Pages" href="contact_us.php">Contact Us</a>
 
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="header-control">
+                    <div class="header-control" style="display: none">
                         <div class="header-control-inner">
                             <div class="meta-dreaming">
-                                <!--<ul class="wpml-menu">
+                                <ul class="wpml-menu">
                                     <li class="menu-item akasha-dropdown block-language">
                                         <a href="#" data-akasha="akasha-dropdown">
                                             <img src="../assets/images/en.png"
@@ -129,7 +129,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                </ul>-->
+                                </ul>
                                 <div class="header-search akasha-dropdown">
                                     <div class="header-search-inner" data-akasha="akasha-dropdown">
                                         <a href="#" class="link-dropdown block-link">
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="akasha-dropdown-close">x</div>
-                                <!--<div class="menu-item block-user block-dreaming akasha-dropdown">
+                                <div class="menu-item block-user block-dreaming akasha-dropdown">
                                     <a class="block-link" href="my-account.html">
                                         <span class="flaticon-profile"></span>
                                     </a>
@@ -193,7 +193,7 @@
                                             <a href="#">Logout</a>
                                         </li>
                                     </ul>
-                                </div>-->
+                                </div>
                                 <div class="block-minicart block-dreaming akasha-mini-cart akasha-dropdown">
                                     <div class="shopcart-dropdown block-cart-link" data-akasha="akasha-dropdown">
                                         <a class="block-link link-dropdown" href="cart.html">
@@ -214,7 +214,7 @@
                                                     </a>
                                                     <span class="quantity">1 × <span
                                                             class="akasha-Price-amount amount"><span
-                                                            class="akasha-Price-currencySymbol">$</span>150.00</span></span>
+                                                            class="akasha-Price-currencySymbol">₹</span>150.00</span></span>
                                                 </li>
                                                 <li class="akasha-mini-cart-item mini_cart_item">
                                                     <a href="#" class="remove remove_from_cart_button">×</a>
@@ -225,7 +225,7 @@
                                                     </a>
                                                     <span class="quantity">1 × <span
                                                             class="akasha-Price-amount amount"><span
-                                                            class="akasha-Price-currencySymbol">$</span>129.00</span></span>
+                                                            class="akasha-Price-currencySymbol">₹</span>129.00</span></span>
                                                 </li>
                                                 <li class="akasha-mini-cart-item mini_cart_item">
                                                     <a href="#" class="remove remove_from_cart_button">×</a>
@@ -236,12 +236,12 @@
                                                     </a>
                                                     <span class="quantity">1 × <span
                                                             class="akasha-Price-amount amount"><span
-                                                            class="akasha-Price-currencySymbol">$</span>139.00</span></span>
+                                                            class="akasha-Price-currencySymbol">₹</span>139.00</span></span>
                                                 </li>
                                             </ul>
                                             <p class="akasha-mini-cart__total total"><strong>Subtotal:</strong>
                                                 <span class="akasha-Price-amount amount"><span
-                                                        class="akasha-Price-currencySymbol">$</span>418.00</span>
+                                                        class="akasha-Price-currencySymbol">₹</span>418.00</span>
                                             </p>
                                             <p class="akasha-mini-cart__buttons buttons">
                                                 <a href="cart.html" class="button akasha-forward">Viewcart</a>
@@ -266,7 +266,7 @@
                     <span></span>
                 </a>
             </div>
-            <div class="header-search akasha-dropdown">
+            <div class="header-search akasha-dropdown" style="display: none">
                 <div class="header-search-inner" data-akasha="akasha-dropdown">
                     <a href="#" class="link-dropdown block-link">
                         <span class="flaticon-magnifying-glass-1"></span>
@@ -340,10 +340,10 @@
         </div>
         <div class="header-mobile-mid">
             <div class="header-logo">
-                <a href="index.html"><img alt="Akasha" src="../assets/images/logo.png" class="logo"></a>
+                <a href="index.php"><img alt="Akasha" src="../assets/images/logo.png" class="logo"></a>
             </div>
         </div>
-        <div class="header-mobile-right">
+        <div class="header-mobile-right" style="display: none">
             <div class="header-control-inner">
                 <div class="meta-dreaming">
                     <!--<div class="menu-item block-user block-dreaming akasha-dropdown">
@@ -391,7 +391,7 @@
                                         </a>
                                         <span class="quantity">1 × <span
                                                 class="akasha-Price-amount amount"><span
-                                                class="akasha-Price-currencySymbol">$</span>150.00</span></span>
+                                                class="akasha-Price-currencySymbol">₹</span>150.00</span></span>
                                     </li>
                                     <li class="akasha-mini-cart-item mini_cart_item">
                                         <a href="#" class="remove remove_from_cart_button">×</a>
@@ -402,7 +402,7 @@
                                         </a>
                                         <span class="quantity">1 × <span
                                                 class="akasha-Price-amount amount"><span
-                                                class="akasha-Price-currencySymbol">$</span>129.00</span></span>
+                                                class="akasha-Price-currencySymbol">₹</span>129.00</span></span>
                                     </li>
                                     <li class="akasha-mini-cart-item mini_cart_item">
                                         <a href="#" class="remove remove_from_cart_button">×</a>
@@ -413,12 +413,12 @@
                                         </a>
                                         <span class="quantity">1 × <span
                                                 class="akasha-Price-amount amount"><span
-                                                class="akasha-Price-currencySymbol">$</span>139.00</span></span>
+                                                class="akasha-Price-currencySymbol">₹</span>139.00</span></span>
                                     </li>
                                 </ul>
                                 <p class="akasha-mini-cart__total total"><strong>Subtotal:</strong>
                                     <span class="akasha-Price-amount amount"><span
-                                            class="akasha-Price-currencySymbol">$</span>418.00</span>
+                                            class="akasha-Price-currencySymbol">₹</span>418.00</span>
                                 </p>
                                 <p class="akasha-mini-cart__buttons buttons">
                                     <a href="cart.html" class="button akasha-forward">Viewcart</a>
