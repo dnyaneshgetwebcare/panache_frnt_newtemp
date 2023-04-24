@@ -25,11 +25,12 @@ foreach ($display_list_type as $display_type) {
                  data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
                 <?php foreach ($new_arrivals as $new_arrival){
                     $product_name= $new_arrival['name'];
-                    $img_path="assets/images/apro134-1-600x778.jpg";
+                   /* $img_path="assets/images/apro134-1-600x778.jpg";
                     if($new_arrival['images']!='' && file_exists($server_dir_img.''.$new_arrival['images'])){
                         //$img_path= '/../panache_bil_git_hub/uploads/'.$product['images'];
                         $img_path= $img_default_url.''.$new_arrival['images'];
-                    }
+                    }*/
+                    $img_path= $db_con->getImagePath($new_arrival['images'],array('width'=>600,'height'=>766));
                     $product_url=$def_product_url.''.$new_arrival['id'];
                     ?>
                     <div class="product-item recent-product style-01 rows-space-0 post-93 product type-product status-publish has-post-thumbnail product_cat-light product_cat-table product_cat-new-arrivals product_tag-table product_tag-sock first instock shipping-taxable purchasable product-type-simple  ">

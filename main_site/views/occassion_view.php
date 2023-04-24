@@ -21,11 +21,12 @@ foreach ($occaion_master as $occasion){
                  data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
                 <?php foreach ($occasion_list as $occasion_item){
                     $product_name= $occasion_item['name'];
-                    $img_path="assets/images/apro134-1-600x778.jpg";
+                    /*$img_path="assets/images/apro134-1-600x778.jpg";
                     if($occasion_item['images']!='' && file_exists($server_dir_img.''.$occasion_item['images'])){
                         //$img_path= '/../panache_bil_git_hub/uploads/'.$product['images'];
                         $img_path= $img_default_url.''.$occasion_item['images'];
-                    }
+                    }*/
+                    $img_path= $db_con->getImagePath($occasion_item['images'],array('width'=>600,'height'=>766));
                     $product_url=$def_product_url.''.$occasion_item['id'];
                     ?>
                     <div class="product-item featured_products style-02 rows-space-30 post-34 product type-product status-publish has-post-thumbnail product_cat-light product_cat-new-arrivals product_tag-light product_tag-hat product_tag-sock first instock sale featured shipping-taxable product-type-grouped">
