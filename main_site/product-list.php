@@ -11,6 +11,7 @@
 <?php
 $category_id=isset($_GET['cat_id'])?$_GET['cat_id']:1;
 $view_type=isset($_GET['vw'])?$_GET['vw']:"g";
+$filter_strng=isset($_GET['s'])?$_GET['s']:"";
 $limit=isset($_GET['limit'])?$_GET['limit']:21;
 $next_pagination=isset($_GET['next'])?$_GET['next']:0;
 $page_no=isset($_GET['page_no'])?$_GET['page_no']:1;
@@ -20,7 +21,7 @@ $def_product_url="product-details.php?prod_id=";
 $pages_limit=9;
 $db_con= new DBConnect();
 $select_type_ids=isset($_GET["typ_ids"])?$_GET["typ_ids"]:"";
-$product_return= $db_con->getProductlist($category_id,$limit,$page_no,$select_type_ids);
+$product_return= $db_con->getProductlist($category_id,$limit,$page_no,$select_type_ids,$filter_strng);
 $type_list= $db_con->getTypeList($category_id);
 $cat_name= $db_con->getcatdetails($category_id);
 //print_r($_SERVER['DOCUMENT_ROOT']);die;
@@ -162,9 +163,10 @@ if($select_type_ids!='') {
                 <div id="widget-area" class="widget-area shop-sidebar">
                     <div id="akasha_product_search-2" class="widget akasha widget_product_search">
                         <form class="akasha-product-search">
+
                             <input id="akasha-product-search-field-0" class="search-field"
-                                   placeholder="Search products…" value="" name="s" type="search">
-                            <button type="submit" value="Search">Search</button>
+                                   placeholder="Search products…" value="<?= $filter_strng; ?>" name="s" type="search">
+                            <button type="button" onclick="filterBY()" value="Search" style="position: absolute;top: 0;right: 0;height: 46px;line-height: 46px;width: 60px;overflow: hidden;background-color: transparent;border-radius: 0 30px 30px 0;color: #000;">    <i class="fa fa-search" style="font-size: 21px" > </i>Search</button>
                         </form>
                     </div>
                         <div id="akasha_product_categories-3" class="widget akasha widget_product_categories"><h2
@@ -294,6 +296,16 @@ if($select_type_ids!='') {
         newUrl= changeurl("page_no",page_number,newUrl);
         window.location.href =newUrl;
     }
+   function filterBY(){
+       var filter_str=$('#akasha-product-search-field-0').val();
+       if(filter_str!=''){
+           var newUrl = changeurl("s",filter_str);
+           window.location.href =newUrl;
+       }else{
+
+       }
+
+   }
     function gotpage(page_link){
         var page_number= $(page_link).html();
         var newUrl = changeurl("page_no",page_number);

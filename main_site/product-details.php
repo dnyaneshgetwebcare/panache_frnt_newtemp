@@ -7,7 +7,7 @@ $img_lists= $db_con->getImageList($product_id);
 $related_products_return=$db_con->getrelatedProductlist($product_details['category_id'],$product_details['type_id']);
 //print_r($product_details);
 $related_products=$related_products_return['product_list'];
-$related_products_imgs=$related_products_return['image_list'];
+
  $def_product_url="product-details.php?prod_id=";
 $img_path1= $db_con->getImagePath();
 $img_orignal_path="/panache_bill/uploads/";
@@ -301,11 +301,12 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                         }
                        $product_url=$def_product_url.''.$product['id'];
                         $product_name= $product['name'];
-                            $img_path="assets/images/apro134-1-600x778.jpg";
+                           /* $img_path="assets/images/apro134-1-600x778.jpg";
                             if($product['images']!='' && file_exists($server_dir_img.''.$product['images'])){
                                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
                                 $img_path= $img_default_url.''.$product['images'];
-                            }
+                            }*/
+                        $img_path = $db_con->getImagePath($product['images'],array('height'=>778,'width'=>600));
                        /* $img_path = $db_con->getImagePath();
                         if(isset($related_products_imgs[$product['id']])  && $related_products_imgs[$product['id']]!=''){
                             $img_path = $db_con->getImagePath($related_products_imgs[$product['id']]);

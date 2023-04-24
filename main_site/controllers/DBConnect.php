@@ -4,18 +4,25 @@ class DBConnect
 {
 
 public $conn = null;
-    public $servername = "localhost";
-    public $username = "root";
-    public $password = "";
-
-    public $billing_sever_folder='panache_bill';
+    public $servername ;
+    public $username;
+    public $password;
+    public  $img_orignal_path;
+    public $img_default_url;
+    public $server_dir_img;
+    //public $billing_sever_folder='panache_bill';
 public $conig_details;
     function  __construct(){
-        $conig_details=new ConfigDetails();
-        $servername = $conig_details->servername;
-        $username = $conig_details->username;
-        $password = $conig_details->password;
-        $billing_sever_folder = $conig_details->billing_sever_folder;
+        $this->conig_details=new ConfigDetails();
+        $this->servername = $this->conig_details->servername;
+        $this->username = $this->conig_details->username;
+        $this->password = $this->conig_details->password;
+        $path_details=$this->conig_details->getPathconfig();
+        $this->img_orignal_path =$path_details['img_orignal_path'];
+        $this->img_default_url =$path_details['img_default_url'];
+        $this->server_dir_img =$path_details['server_dir_img'];
+
+        $billing_sever_folder = $this->conig_details->billing_sever_folder;
     }
     function connectdb()
     {
@@ -30,7 +37,7 @@ public $conig_details;
             }
         }
     }
-    function getProductlist($category,$limit=21,$page_no=1,$type_ids=""){
+    function getProductlist($category,$limit=21,$page_no=1,$type_ids="",$filter_strng=""){
         $this->connectdb();
         $offset=0;
         if($page_no!=1){
@@ -40,6 +47,9 @@ public $conig_details;
         $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and category_id= ". $category;
         if($type_ids!=""){
             $where_con= $where_con." and type_id IN (".$type_ids.") ";
+        }
+        if($filter_strng!=""){
+            $where_con= $where_con." and name like %".$filter_strng."% ";
         }
         $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
 //print_r($sql);die;
@@ -159,15 +169,15 @@ print_r($type_list);*/
           print_r(array_combine($type_list,$product_list));die;*/
         return $img_list;
     }
-    function getallImageList($product_id=''){
+    function getallImageList($product_id='',$offset=0){
         $this->connectdb();
-
+        $limt=20;
         $where_con_product=  '';
         if($product_id!=''){
             $where_con_product=  'and item_id = '.$product_id;
         }
-        ;
-        $sql_img_list = 'SELECT * FROM `item_master_img` where  status = 1 '.$where_con_product.' order by default_image desc';
+
+        $sql_img_list = 'SELECT * FROM `item_master_img` where  status = 1 '.$where_con_product.' order by default_image desc limt=20 offset='.$offset;
 
         $statement_product = $this->conn->query($sql_img_list);
         $img_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
@@ -214,9 +224,10 @@ print_r($type_list);*/
     function getImagePath($image_name='',$dimension=null){   // array width and height
         $img_path1="";
        // print_r($img_path1);die;
-        $img_orignal_path="/".$this->billing_sever_folder."/uploads/";
+
+        /*$img_orignal_path=  "/".$this->billing_sever_folder."/uploads/";
         $img_default_url="/..".$img_orignal_path;
-        $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
+        $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;*/
         if($dimension!=null){
            // $additonal_path=$dimension['width']."_".$dimension['height']."/";
             $image_extension_return=$this->createDestinationPath($image_name,$dimension['width'],$dimension['height'],1);
@@ -225,28 +236,30 @@ print_r($type_list);*/
             $additonal_path=$image_extension_return['path'];
                // echo $server_dir_img.''.$additonal_path.''.$only_name.'.jpg';
 
-                if($image_name!='' && file_exists($server_dir_img.''.$additonal_path.''.$only_name.'.jpg')){
+                if($image_name!='' && file_exists($this->server_dir_img.''.$additonal_path.''.$only_name.'.jpg')){
                     //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
-                    $img_path1= $img_default_url.''.$additonal_path.''.$only_name.'.jpg';
+                    $img_path1= $this->img_default_url.''.$additonal_path.''.$only_name.'.jpg';
                 }
            // }
 
         }
         if($img_path1=="") {
-            if ($image_name != '' && file_exists($server_dir_img . '' . $image_name)) {
+            if ($image_name != '' && file_exists($this->server_dir_img . '' . $image_name)) {
                 //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
-                $img_path1 = $img_default_url . '' . $image_name;
+                $img_path1 = $this->img_default_url . '' . $image_name;
             }
         }
 
         if($img_path1==""){
-            $img_path1="assets/images/apro131-2.jpg";
+            $img_path1=$this->conig_details->img_def;
+
+
             if($dimension!=null){
 
                 if($dimension['width']==600 && $dimension['height']==766){
-                    $img_path1="assets/images/apro134-1-600x778.jpg";
+                    $img_path1=$this->conig_details->img_600_778;
                 }elseif ($dimension['width']==270 && $dimension['height']==350){
-                    $img_path1="assets/images/apro302-270x350.jpg";
+                    $img_path1=$this->conig_details->img_270_350;
                 }
             }
         }
@@ -257,12 +270,12 @@ print_r($type_list);*/
 
         $img_path1="";
         // print_r($img_path1);die;
-        $img_orignal_path="/".$this->billing_sever_folder."/uploads/";
+       // $img_orignal_path=$this->conig_details->getOrignalPath();// old code $img_orignal_path="/".$this->billing_sever_folder."/uploads/";
        // $img_default_url="/..".$img_orignal_path;
-        $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
-        if($image_name!='' && file_exists($server_dir_img.''.$image_name)){
+        //$server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
+        if($image_name!='' && file_exists($this->server_dir_img.''.$image_name)){
             //$img_path= '/../../panache_bil_git_hub/uploads/'.$product['images'];
-            $img_path1= $server_dir_img.''.$image_name;
+            $img_path1= $this->server_dir_img.''.$image_name;
         }
         return $img_path1;
     }
@@ -324,6 +337,7 @@ print_r($type_list);*/
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
 // saving the thumbnail in your current folder
         $save = imagejpeg($dst,$dsc_path."/".$image_name_spli.".jpg");
+        echo $dsc_path."/".$image_name_spli.".jpg";
         return $save;
    /*     if($save){
             $result_status=true;
@@ -338,8 +352,13 @@ print_r($type_list);*/
 
        $destination_array=explode('/',$image_filename);
        $des_file_name=$destination_array[sizeof($destination_array)-1];
-        unset($destination_array[sizeof($destination_array)-1]);
-        $destination_string = implode("/",$destination_array)."/".$width."_".$height."/";
+       $temp_desct='';
+       if(sizeof($destination_array)==2){
+           unset($destination_array[sizeof($destination_array)-1]);
+           $temp_desct= implode("/",$destination_array);
+       }
+
+        $destination_string = $temp_desct."/".$width."_".$height."/";
         if($_get==0) {
             if (!is_dir($destination_string)) {
                 mkdir($destination_string, 0777, true);

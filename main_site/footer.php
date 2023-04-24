@@ -67,7 +67,7 @@
 <div class="footer-device-mobile">
     <div class="wapper">
         <div class="footer-device-mobile-item device-home">
-            <a href="index.html">
+            <a href="index.php">
 					<span class="icon">
 						<i class="fa fa-home" aria-hidden="true"></i>
 					</span>
@@ -75,30 +75,30 @@
             </a>
         </div>
         <div class="footer-device-mobile-item device-home device-wishlist">
-            <a href="wishlist.html">
+            <a href="product-list.php?cat_id=2">
 					<span class="icon">
-						<i class="fa fa-heart" aria-hidden="true"></i>
+						<i class="fa fa-female" aria-hidden="true"></i>
 					</span>
-                Wishlist
+                Womens
             </a>
         </div>
         <div class="footer-device-mobile-item device-home device-cart">
-            <a href="cart.html">
+            <a href="product-list.php?cat_id=1">
 					<span class="icon">
-						<i class="fa fa-shopping-basket" aria-hidden="true"></i>
-						<span class="count-icon">
+						<i class="fa fa-male" aria-hidden="true"></i>
+						<!--<span class="count-icon">
 							0
-						</span>
+						</span>-->
 					</span>
-                <span class="text">Cart</span>
+                <span class="text">Mens</span>
             </a>
         </div>
         <div class="footer-device-mobile-item device-home device-user">
-            <a href="my-account.html">
+            <a href="product-list.php?cat_id=3">
 					<span class="icon">
-						<i class="fa fa-user" aria-hidden="true"></i>
+						<i class="fa fa-diamond" aria-hidden="true"></i>
 					</span>
-                Account
+                Accessories
             </a>
         </div>
     </div>
