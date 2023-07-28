@@ -177,8 +177,8 @@ print_r($type_list);*/
             $where_con_product=  'and item_id = '.$product_id;
         }
 
-        $sql_img_list = 'SELECT * FROM `item_master_img` where  status = 1 '.$where_con_product.' order by default_image desc limt=20 offset='.$offset;
-
+        $sql_img_list = 'SELECT * FROM `item_master_img` where  status = 1 '.$where_con_product.' order by default_image desc limit 20 offset '.$offset;
+//echo $sql_img_list;die;
         $statement_product = $this->conn->query($sql_img_list);
         $img_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
 //print_r($sql_product);die;
@@ -313,15 +313,19 @@ print_r($type_list);*/
 
        public function resizeImage($image_name='',$new_width=600,$new_height=766){
         // specifying the image
+           //echo $image_name; die;
         $image_filename = $this->getImagePathSer($image_name);
+
        /*$new_width = 600;
        $new_height = 766;*/
        if($image_filename==''){
           return "Image not exits";
        }
         $dsc_details= $this->createDestinationPath($image_filename,$new_width,$new_height);
+       print_r($dsc_details);die;
         $dsc_path=$dsc_details['path'];
         $dsc_img_name=$dsc_details['filename'];
+        $file_ext=$dsc_details['file_extn'];
         //$image_name_spli=explode('.',$dsc_img_name);
            $image_name_spli = $dsc_details['filename_without_extn'];
 // get source image size
@@ -331,13 +335,26 @@ print_r($type_list);*/
 // creating a black picture
         $dst = imagecreatetruecolor($new_width, $new_height);
 // loading the source image
-        $src = imagecreatefromjpeg($image_filename);
+           //echo $file_ext;die;
+           if(strtolower($file_ext) == 'png'){
+               $src = imagecreatefrompng($image_filename);
+           }else{
+               $src = imagecreatefromjpeg($image_filename);
+           }
+
 
 // creating a thumbnail
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
 // saving the thumbnail in your current folder
-        $save = imagejpeg($dst,$dsc_path."/".$image_name_spli.".jpg");
-        echo $dsc_path."/".$image_name_spli.".jpg";
+        //$save = imagejpeg($dst,$dsc_path."/".$image_name_spli.".jpg");
+           if(strtolower($file_ext) == 'png'){
+               $save = imagepng($dst,$dsc_path."/".$image_name_spli.".png");
+               echo $dsc_path."/".$image_name_spli.".png";
+           }else{
+               $save = imagejpeg($dst,$dsc_path."/".$image_name_spli.".jpg");
+               echo $dsc_path."/".$image_name_spli.".jpg";
+           }
+
         return $save;
    /*     if($save){
             $result_status=true;
@@ -353,6 +370,7 @@ print_r($type_list);*/
        $destination_array=explode('/',$image_filename);
        $des_file_name=$destination_array[sizeof($destination_array)-1];
        $temp_desct='';
+       //print_r($destination_array);
        if(sizeof($destination_array)==2){
            unset($destination_array[sizeof($destination_array)-1]);
            $temp_desct= implode("/",$destination_array);
