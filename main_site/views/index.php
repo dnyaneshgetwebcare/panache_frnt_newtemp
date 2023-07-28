@@ -141,15 +141,42 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
     <div class="section-014">
         <div class="container">
             <div class="row">
+                 <div class="col-md-6 col-lg-3">
+                    <div class="akasha-iconbox style-02">
+                        <div class="iconbox-inner">
+                            <div class="icon">
+                                <span class="flaticon-recycle"></span>
+                            </div>
+                            <div class="content">
+                                <h4 class="title">3 Days Return</h4>
+                                <div class="desc">Our return policy allows you to pick up your outfit prior to your event, use it on the day of the event, and return it the following day.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="akasha-iconbox style-02">
+                        <div class="iconbox-inner">
+                            <div class="icon">
+                                <span class="flaticon-padlock"></span>
+                            </div>
+                            <div class="content">
+                                <h4 class="title">Security Deposite</h4>
+                                <div class="desc">Our deposit policy is determined by the specific dress you choose to rent, and it is fully refundable*.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6 col-lg-3">
                     <div class="akasha-iconbox style-02">
                         <div class="iconbox-inner">
                             <div class="icon">
-                                <span class="flaticon-rocket-ship"></span>
+                                <span class="flaticon-shopping-bag"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">Cleanliness and Hygiene</h4>
-                                <div class="desc">Cleanliness and hygiene is maintance at store.
+                                <h4 class="title">Variety</h4>
+                                <div class="desc">We offer a diverse range of clothing collections that are guaranteed to elevate your event to the next level.
                                 </div>
                             </div>
                         </div>
@@ -159,37 +186,11 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="akasha-iconbox style-02">
                         <div class="iconbox-inner">
                             <div class="icon">
-                                <span class="flaticon-padlock"></span>
+                                <span class="flaticon-diamond"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">Safe Deposite</h4>
-                                <div class="desc">Deposite will be applicable as per policy for safety purpose.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="akasha-iconbox style-02">
-                        <div class="iconbox-inner">
-                            <div class="icon">
-                                <span class="flaticon-recycle"></span>
-                            </div>
-                            <div class="content">
-                                <h4 class="title">3 Days Return</h4>
-                                <div class="desc">Pick up outfit before your event, use it on event day and return next day of event.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="akasha-iconbox style-02">
-                        <div class="iconbox-inner">
-                            <div class="icon">
-                                <span class="flaticon-support"></span>
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Shop Confidence</h4>
-                                <div class="desc">Our Buyer Protection covers your purchase from click to delivery.
+                                <h4 class="title">Cleanliness and Hygiene</h4>
+                                <div class="desc">We prioritize cleanliness and hygiene maintenance at our store to ensure a pleasant and safe experience for our customers.
                                 </div>
                             </div>
                         </div>

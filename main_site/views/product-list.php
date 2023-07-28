@@ -39,20 +39,24 @@ if($select_type_ids!='') {
 
 ?>
 <?php include("menu.php"); ?>
-<div class="banner-wrapper has_background">
+<?php $title = $cat_name;
+$banner_img_path = "../assets/images/banner-for-all2.jpg";
+include("banner_mid.php");
+?>
+<!--<div class="banner-wrapper has_background">
     <img src="../assets/images/banner-for-all2.jpg"
          class="img-responsive attachment-1920x447 size-1920x447" alt="img">
     <div class="banner-wrapper-inner">
-        <h1 class="page-title"><?= $cat_name; ?></h1>
+        <h1 class="page-title"><?php /*= $cat_name; */?></h1>
         <div role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs">
             <ul class="trail-items breadcrumb">
                 <li class="trail-item trail-begin"><a href="index.php"><span>Home</span></a></li>
-                <li class="trail-item trail-end active"><span><?= $cat_name; ?></span>
+                <li class="trail-item trail-end active"><span><?php /*= $cat_name; */?></span>
                 </li>
             </ul>
         </div>
     </div>
-</div>
+</div>-->
 <div class="main-container shop-page left-sidebar">
     <div class="container">
         <div class="row">

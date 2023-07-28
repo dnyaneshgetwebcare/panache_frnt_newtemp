@@ -3,7 +3,7 @@ include("controllers/DBConnect.php");
 
 $db_con= new DBConnect();
 $product_id=
-$img_list=$db_con->getallImageList();
+$img_list=$db_con->getallImageList(466);
 
 foreach ($img_list as $image_details){
   // $orignal_img = $db_con->getImagePath($image_details['img_name'],true);

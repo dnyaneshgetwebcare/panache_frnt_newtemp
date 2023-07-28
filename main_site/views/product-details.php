@@ -224,13 +224,12 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                             <div class="akasha-iconbox style-01">
                                 <div class="iconbox-inner">
                                     <div class="icon">
-                                        <span class="flaticon-rocket-ship"></span>
-                                        <span class="flaticon-rocket-ship"></span>
+                                        <span class="flaticon-return"></span>
+                                        <span class="flaticon-return"></span>
                                     </div>
                                     <div class="content">
-                                        <h4 class="title">Fast Shipping.</h4>
-                                        <div class="desc">With sites in 5 languages, we ship to over 200
-                                            countries
+                                        <h4 class="title">3 Days Return.</h4>
+                                        <div class="desc">Pick up, wear, and return - that's our hassle-free event outfit policy.
                                         </div>
                                     </div>
                                 </div>
@@ -242,9 +241,8 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                                         <span class="flaticon-padlock"></span>
                                     </div>
                                     <div class="content">
-                                        <h4 class="title">Safe delivery</h4>
-                                        <div class="desc">Pay with the world’s most popular, secure
-                                            payment methods.
+                                        <h4 class="title">Security Deposit</h4>
+                                        <div class="desc">A security deposit is applicable for rental purposes.
                                         </div>
                                     </div>
                                 </div>
@@ -252,13 +250,12 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                             <div class="akasha-iconbox style-01">
                                 <div class="iconbox-inner">
                                     <div class="icon">
-                                        <span class="flaticon-recycle"></span>
-                                        <span class="flaticon-recycle"></span>
+                                        <span class="flaticon-shirt-1"></span>
+                                        <span class="flaticon-shirt-1"></span>
                                     </div>
                                     <div class="content">
-                                        <h4 class="title">365 Days Return</h4>
-                                        <div class="desc">Round-the-clock assistance for a shopping
-                                            experience.
+                                        <h4 class="title">Cleanliness and Hygiene</h4>
+                                        <div class="desc">Dresses are dry-cleaned and packaged before pickup.
                                         </div>
                                     </div>
                                 </div>
