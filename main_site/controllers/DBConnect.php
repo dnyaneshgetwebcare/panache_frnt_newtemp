@@ -2,7 +2,9 @@
 include("ConfigDetails.php");
 class DBConnect
 {
-
+/*ALTER TABLE `type_master` ADD `dispaly_main_site` INT(1) NOT NULL DEFAULT '1' AFTER `curent_number`;
+ALTER TABLE `item_master` ADD `skip_website` INT NOT NULL DEFAULT '0' AFTER `display_type`;
+*/
 public $conn = null;
     public $servername ;
     public $username;
@@ -37,19 +39,25 @@ public $conig_details;
             }
         }
     }
-    function getProductlist($category,$limit=21,$page_no=1,$type_ids="",$filter_strng=""){
+    function getProductlist($category,$limit=21,$page_no=1,$type_ids="",$filter_strng="",$occ_ids=""){
         $this->connectdb();
         $offset=0;
         if($page_no!=1){
              $offset=($page_no-1) * ($limit);
         }
 
-        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and category_id= ". $category;
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and `skip_website` = 0 ";
+         if($category!=""){
+            $where_con= $where_con." and category_id IN (".$category.") ";
+        }
         if($type_ids!=""){
             $where_con= $where_con." and type_id IN (".$type_ids.") ";
         }
         if($filter_strng!=""){
-            $where_con= $where_con." and name like %".$filter_strng."% ";
+            $where_con= $where_con." and name like '%".$filter_strng."%' ";
+        }
+        if($occ_ids!=""){
+            $where_con= $where_con." and find_in_set('". $occ_ids . "',occasion_master)";
         }
         $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
 //print_r($sql);die;
@@ -71,7 +79,7 @@ public $conig_details;
         $offset=0;
 
 
-        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and category_id= ". $category;
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and skip_website = 0 and category_id= ". $category;
         if($type_ids!=""){
             $where_con= $where_con." and type_id IN (".$type_ids.") ";
         }
@@ -88,7 +96,7 @@ public $conig_details;
         $offset=0;
 
 
-        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 ";
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and skip_website = 0 ";
 
         $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
 //print_r($sql);die;
@@ -104,7 +112,7 @@ public $conig_details;
         $offset=0;
 
 
-        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0  and find_in_set('". $occassion_id . "',occasion_master)";
+        $where_con=  "where `scrab_status` = 'No' AND `delete_status` = 0 and skip_website = 0 and find_in_set('". $occassion_id . "',occasion_master)";
 
         $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
 //print_r($sql);die;
@@ -119,7 +127,7 @@ public $conig_details;
         $offset=0;
 
 
-        $where_con=  "where `scrab_status` = 'No'   AND `delete_status` = 0 ";
+        $where_con=  "where `scrab_status` = 'No'   AND `delete_status` = 0 and skip_website=0 ";
 
         $sql = 'SELECT * FROM `item_master` '.$where_con.'  limit '.$limit.' OFFSET '.$offset;
 //print_r($sql);die;
@@ -129,7 +137,7 @@ public $conig_details;
 
         return ['product_list'=>$product_list,'number_pages'=>0,'total_records'=>0 ,'image_list'=>$images_list ];
     }
-      function getTypeList($category){
+      function getTypeList($category = "",$occ_ids=""){
         $this->connectdb();
     /*    $where_con=  "where  category_id= ". $category;
         $sql = 'SELECT id,name FROM `type_master` '.$where_con.'';
@@ -138,9 +146,15 @@ public $conig_details;
         $type_list = $statement->fetchAll(PDO::FETCH_ASSOC);*/
         /*$type_list=array_combine(array_column($type_list, 'id'), $type_list);
 print_r($type_list);*/
- $where_con_product=  "where `scrab_status` = 'No' AND `delete_status` = 0 and item_master.category_id= ". $category;
-        $sql_product = 'SELECT type_id,count(*) total_cnt,`type_master`.name as name,type_id FROM `item_master` left join `type_master` on type_id=type_master.id '.$where_con_product.'  group by type_id order by total_cnt desc';
-
+ $where_con_product=  "where `scrab_status` = 'No' AND `delete_status` = 0 and type_master.dispaly_main_site = 1 and skip_website =0  ";
+ if($category!=""){
+     $where_con_product = $where_con_product." and item_master.category_id IN (". $category.") ";
+ }
+ if($occ_ids!=""){
+     $where_con_product = $where_con_product." and find_in_set('". $occ_ids . "',occasion_master)";
+ }
+        $sql_product = 'SELECT type_id,count(*) total_cnt,`type_master`.name as name,type_id,type_master.category_id FROM `item_master` left join `type_master` on type_id=type_master.id '.$where_con_product.'  group by type_master.category_id , type_id order by type_master.category_id asc,total_cnt desc';
+//echo $sql_product;die;
         $statement_product = $this->conn->query($sql_product);
         $type_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
 //print_r($sql_product);die;
@@ -199,6 +213,9 @@ print_r($type_list);*/
     function getItemImages($product_list){
         $this->connectdb();
         $product_ids=array_column($product_list,'id');
+        if(empty($product_ids)){
+            return array();
+        }
         $items = implode($product_ids,',');
 
         $sql_img_list = 'SELECT * FROM `item_master_img` where item_id in ('.$items.')  and status = 1 and   default_image =1';
@@ -211,14 +228,18 @@ print_r($type_list);*/
           print_r(array_combine($type_list,$product_list));die;*/
         return $img_list;
     }
-    function  getcatdetails($category){
+    function  getcatdetails($category=""){
         $this->connectdb();
-        $where_con_product=  "where id= ". $category;
+        $where_con_product="";
+        if($category!=""){
+            $where_con_product=  "where id= ". $category;
+        }
+
         $sql_product = 'SELECT * FROM `category_master`  '.$where_con_product.' ';
 
         $statement_product = $this->conn->query($sql_product);
         $type_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
-        return $type_list[0]['name'];
+        return $type_list;
     }
 
     function getImagePath($image_name='',$dimension=null){   // array width and height
@@ -290,20 +311,38 @@ print_r($type_list);*/
         return $type_list;
     }
 
-    public function getOccassionMaster()
+    public function getOccassionMaster($main_screen_active=1,$website = 0,$occasion_id="")
     {
         $this->connectdb();
-        $occassion_where=  "where status= 1 and main_screen_active=1";
+        $occassion_where=  "where status= 1";
+        if($main_screen_active===1){
+            $occassion_where=  $occassion_where." and main_screen_active=1";
+        }
+
+        if($website==1){
+            $occassion_where=  $occassion_where." and website=1";
+        }
+        if($occasion_id!=""){
+            $occassion_where=  $occassion_where." and id=".$occasion_id;
+        }
+        //$occassion_where=  "where status= 1 and main_screen_active=1";
         $sql_occcassion = 'SELECT * FROM `occation_master`  '.$occassion_where.' ';
 
         $statement_product = $this->conn->query($sql_occcassion);
         $occasion_list = $statement_product->fetchAll(PDO::FETCH_ASSOC);
         return $occasion_list;
     }
-    public function getDisplayType()
+    public function getDisplayType($main_screen_active=1,$website = 0)
     {
         $this->connectdb();
         $occassion_where=  "where status= 1 and main_screen_active=1";
+         if($main_screen_active===1){
+            $occassion_where=  $occassion_where." and main_screen_active=1";
+        }
+
+        if($website==1){
+            $occassion_where=  $occassion_where." and website=1";
+        }
         $sql_occcassion = 'SELECT * FROM `display_type`  '.$occassion_where.' ';
 
         $statement_product = $this->conn->query($sql_occcassion);

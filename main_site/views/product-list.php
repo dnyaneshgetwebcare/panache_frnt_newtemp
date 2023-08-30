@@ -9,6 +9,8 @@
 </head>
 <body>
 <?php
+
+echo "Online pages are out side";die;
 $category_id=isset($_GET['cat_id'])?$_GET['cat_id']:1;
 $view_type=isset($_GET['vw'])?$_GET['vw']:"g";
 $limit=isset($_GET['limit'])?$_GET['limit']:21;
@@ -20,9 +22,11 @@ $def_product_url="product-details.php?prod_id=";
 $pages_limit=9;
 $db_con= new DBConnect();
 $select_type_ids=isset($_GET["typ_ids"])?$_GET["typ_ids"]:"";
-$product_return= $db_con->getProductlist($category_id,$limit,$page_no,$select_type_ids);
+$select_occ_ids=isset($_GET["occ_ids"])?$_GET["occ_ids"]:"";
+$product_return= $db_con->getProductlist($category_id,$limit,$page_no,$select_type_ids,"",$select_occ_ids);
 $type_list= $db_con->getTypeList($category_id);
-$cat_name= $db_con->getcatdetails($category_id);
+$occasion_master= $db_con->getOccassionMaster();
+$cat_name= $db_con->getcatdetails($category_id)[0]['name'];
 //print_r($_SERVER['DOCUMENT_ROOT']);die;
 $img_orignal_path="/panache_bil_git_hub/uploads/";
 $img_default_url="/../..".$img_orignal_path;
@@ -33,10 +37,14 @@ $record_end=($total_records<$record_end)?$total_records:$record_end;
 $record_range=$record_start." -".$record_end;
 $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
 $sel_type_ids_arr=array();
+$sel_occ_ids_arr=array();
 if($select_type_ids!='') {
     $sel_type_ids_arr = explode(',', $select_type_ids);
 }
-
+if($select_occ_ids!='') {
+    $sel_occ_ids_arr = explode(',', $select_occ_ids);
+}
+//print_r($occasion_master);die;
 ?>
 <?php include("menu.php"); ?>
 <?php $title = $cat_name;
@@ -183,6 +191,21 @@ include("banner_mid.php");
                          <?php  } ?>
                         </ul>
                     </div>
+                    <div id="akasha_product_categories-3" class="widget akasha widget_product_categories"><h2
+                            class="widgettitle">Occassion<span class="arrow"></span></h2>
+                        <ul class="product-categories occ_list">
+                            <?php foreach ($occasion_master as $occasion_item) {
+
+                                $class_cur= (array_search($occasion_item['id'],$sel_occ_ids_arr)===false)?"":"current-cat";
+                                ?>
+                            <li class="cat-item   <?= $class_cur.' occ-item-'.$occasion_item['id']; ?>"
+                                data-occ="<?= $occasion_item['id']; ?>" onclick="change_occasion(this)">
+                                <a ><?= $occasion_item['name']; ?></a>
+                                <!--<span class="count">(<?php /*// $occasion_item['total_cnt']; */?>)</span>-->
+                            </li>
+                         <?php  } ?>
+                        </ul>
+                    </div>
                  <!--   <div id="akasha_price_filter-2" class="widget akasha widget_price_filter"><h2
                             class="widgettitle">Filter By Price<span class="arrow"></span></h2>
                         <form method="get" action="#">
@@ -302,6 +325,29 @@ include("banner_mid.php");
         var newUrl = changeurl("page_no",page_number);
          window.location.href =newUrl;
     }
+        function change_occasion(req_li) {
+        if($(req_li).hasClass("current-cat")){
+            $(req_li).removeClass("current-cat");
+        }else{
+            $(req_li).addClass("current-cat");
+        }
+        var type_selected="";
+        $('.occ_list').each(function(){
+            $(this).find('li').each(function(){
+                if($(this).hasClass("current-cat")){
+                    type_selected+=$(this).attr("data-occ")+",";
+                    //console.log($(this).attr("data-type"));
+                }
+        });
+
+        });
+        //if(type_selected!=""){
+            type_selected=type_selected.slice(0,-1);
+            console.log(type_selected);
+           var  newUrl= changeurl("occ_ids",type_selected);
+           window.location.href =newUrl;
+       // }
+    }
     function change_type(req_li) {
         if($(req_li).hasClass("current-cat")){
             $(req_li).removeClass("current-cat");
@@ -338,6 +384,10 @@ include("banner_mid.php");
         }
 var url = new URL(currentUrl);
 if(param=="typ_ids"){
+    url.searchParams.delete("page_no")
+    url.searchParams.delete("next")
+}
+if(param=="occ_ids"){
     url.searchParams.delete("page_no")
     url.searchParams.delete("next")
 }

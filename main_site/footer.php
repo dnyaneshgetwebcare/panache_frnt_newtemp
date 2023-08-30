@@ -42,7 +42,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://www.instagram.com" target="_blank">
+                                    <a href="https://www.instagram.com/panache_the_rental_boutique/" target="_blank">
                                         <i class="fa fa-instagram"></i>
                                     </a>
                                 </li>

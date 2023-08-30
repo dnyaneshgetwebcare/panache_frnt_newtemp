@@ -2,13 +2,12 @@
 <?php include("controllers/DBConnect.php");
 
 $db_con= new DBConnect();
-//echo $db_con->resizeImage();die;
+
 $result=$db_con->getBestSellers();
-$occaion_master=$db_con->getOccassionMaster();
-$display_list_type=$db_con->getDisplayType();
+$occaion_master=$db_con->getOccassionMaster(1);
+$display_list_type=$db_con->getDisplayType(1);
 $best_sellers=$result['product_list'];
 
-//print_r($product_details);
  $def_product_url="product-details.php?prod_id=";
 $img_orignal_path="/panache_bil_git_hub/uploads/";
 $img_default_url="/..".$img_orignal_path;
@@ -30,38 +29,38 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
              data-slick="{&quot;arrows&quot;:false,&quot;slidesMargin&quot;:0,&quot;dots&quot;:true,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:1,&quot;rows&quot;:1}"
              data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}}]">
             <div class="slide-wrap">
-                <img src="assets/images/slide2222.jpg" alt="image">
+                <img src="assets/images/banner/2.jpg" alt="image">
                 <div class="slide-info">
                     <div class="container">
                         <div class="slide-inner">
-                            <h5>Limited Colletion</h5>
-                            <h1>Women</h1>
-                            <h2> Wears</h2>
+                            <h5 style="color: aqua;">Limited Colletion</h5>
+                            <h1 style="color: antiquewhite;" >Women</h1>
+                            <h2 style="color: aliceblue;"> Wears</h2>
                             <a href="product-list.php?cat_id=2">Shop now</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="slide-wrap">
-                <img src="assets/images/slide11new.jpg" alt="image">
+                <img src="assets/images/banner/banner2.jpg" alt="image">
                 <div class="slide-info">
                     <div class="container">
                         <div class="slide-inner">
-                            <h5>Exclusive</h5>
-                            <h1><span>Lengha</h1>
-                            <h2>for Wedding</h2>
+                            <h5 style="color: aqua;">Exclusive</h5>
+                            <h1><span style="color: bisque;" >Lengha</h1>
+                            <h2 style="color: aliceblue;">for Wedding</h2>
                             <a href="product-list.php?cat_id=2">Shop now</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="slide-wrap">
-                <img src="assets/images/slide333.jpg" alt="image">
+                <img src="assets/images/banner/women5.jpg" alt="image">
                 <div class="slide-info">
                     <div class="container">
                         <div class="slide-inner">
-                            <h5>Wedding</h5>
-                            <h1>Mens</h1>
+                            <h5>Bridel</h5>
+                            <h1>Wears</h1>
 
                             <a href="product-list.php?cat_id=1">Shop now</a>
                         </div>
@@ -77,13 +76,13 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="akasha-banner style-01 left-center">
                         <div class="banner-inner">
                             <figure class="banner-thumb">
-                                <img src="assets/images/banner11.jpg"
+                                <img src="assets/images/banner/women.jpeg" style="height: 570px;"
                                      class="attachment-full size-full" alt="img"></figure>
                             <div class="banner-info ">
                                 <div class="banner-content">
                                     <div class="title-wrap">
                                         <h6 class="title">
-                                            <a target="_self" href="product-list.php?cat_id=2">Womens</a>
+                                            <a target="_self" href="product-list.php?cat_id=2" style="color: aliceblue;" >Womens</a>
                                         </h6>
                                     </div>
                                     <div class="button-wrap">
@@ -97,7 +96,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="akasha-banner style-01 right-top">
                         <div class="banner-inner">
                             <figure class="banner-thumb">
-                                <img src="assets/images/banner12.jpg"
+                                <img src="assets/images/banner/mens_banner_1.jpg"
                                      class="attachment-full size-full" alt="img"></figure>
                             <div class="banner-info ">
                                 <div class="banner-content">
@@ -115,7 +114,7 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="akasha-banner style-01 left-bottom">
                         <div class="banner-inner">
                             <figure class="banner-thumb">
-                                <img src="assets/images/banner13.jpg"
+                                <img src="assets/images/banner/jewl_banner.jpg"
                                      class="attachment-full size-full" alt="img"></figure>
                             <div class="banner-info ">
                                 <div class="banner-content">
@@ -137,19 +136,45 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
 <?php include('views/occassion_view.php'); ?>
 <?php include('views/product_display.php'); ?>
 
-
-    <div class="section-014">
+<div class="section-014">
         <div class="container">
             <div class="row">
+                 <div class="col-md-6 col-lg-3">
+                    <div class="akasha-iconbox style-02">
+                        <div class="iconbox-inner">
+                            <div class="icon">
+                                <span class="flaticon-recycle"></span>
+                            </div>
+                            <div class="content">
+                                <h4 class="title">3 Days Return</h4>
+                                <div class="desc">Our return policy allows you to pick up your outfit prior to your event, use it on the day of the event, and return it the following day.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="akasha-iconbox style-02">
+                        <div class="iconbox-inner">
+                            <div class="icon">
+                                <span class="flaticon-padlock"></span>
+                            </div>
+                            <div class="content">
+                                <h4 class="title">Security Deposite</h4>
+                                <div class="desc">Our deposit policy is determined by the specific dress you choose to rent, and it is fully refundable*.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6 col-lg-3">
                     <div class="akasha-iconbox style-02">
                         <div class="iconbox-inner">
                             <div class="icon">
-                                <span class="flaticon-rocket-ship"></span>
+                                <span class="flaticon-shopping-bag"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">Cleanliness and Hygiene</h4>
-                                <div class="desc">Cleanliness and hygiene is maintance at store.
+                                <h4 class="title">Variety</h4>
+                                <div class="desc">We offer a diverse range of clothing collections that are guaranteed to elevate your event to the next level.
                                 </div>
                             </div>
                         </div>
@@ -159,37 +184,11 @@ $server_dir_img=$_SERVER['DOCUMENT_ROOT']."/".$img_orignal_path;
                     <div class="akasha-iconbox style-02">
                         <div class="iconbox-inner">
                             <div class="icon">
-                                <span class="flaticon-padlock"></span>
+                                <span class="flaticon-diamond"></span>
                             </div>
                             <div class="content">
-                                <h4 class="title">Safe Deposite</h4>
-                                <div class="desc">Deposite will be applicable as per policy for safety purpose.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="akasha-iconbox style-02">
-                        <div class="iconbox-inner">
-                            <div class="icon">
-                                <span class="flaticon-recycle"></span>
-                            </div>
-                            <div class="content">
-                                <h4 class="title">3 Days Return</h4>
-                                <div class="desc">Pick up outfit before your event, use it on event day and return next day of event.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="akasha-iconbox style-02">
-                        <div class="iconbox-inner">
-                            <div class="icon">
-                                <span class="flaticon-support"></span>
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Shop Confidence</h4>
-                                <div class="desc">Our Buyer Protection covers your purchase from click to delivery.
+                                <h4 class="title">Cleanliness and Hygiene</h4>
+                                <div class="desc">We prioritize cleanliness and hygiene maintenance at our store to ensure a pleasant and safe experience for our customers.
                                 </div>
                             </div>
                         </div>

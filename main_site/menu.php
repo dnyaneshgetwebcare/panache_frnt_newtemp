@@ -1,4 +1,8 @@
 <?php
+$occaion_menu=$db_con->getOccassionMaster(0,1);
+$display_type_menu=$db_con->getDisplayType(0,1);
+$occacions_size = count($occaion_menu);
+$display_size = count($display_type_menu);
 ?>
 <header id="header" class="header style-02 header-dark header-transparent header-sticky">
     <div class="header-wrap-stick">
@@ -85,7 +89,47 @@
                                         </div>
                                     </div>
                                 </li>
+<li id="menu-item-228"
+                                    class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-228 parent parent-megamenu item-megamenu menu-item-has-children" style="<?= ($display_size ==0 && $occacions_size ==0)?'display:none;':''; ?>">
+                                    <a class="akasha-menu-item-title" title="Search" href="#"
+                                       >Search</a>
+                                    <span class="toggle-submenu"></span>
+                                    <div class="submenu megamenu megamenu-shop">
+                                        <div class="row">
 
+                                            <div class="col-md-4" style="<?= ($occacions_size ==0)?'display:none;':''; ?>" >
+                                                <div class="akasha-listitem style-01">
+                                                    <div class="listitem-inner">
+                                                        <h4 class="title">Occasion </h4>
+                                                        <ul class="listitem-list">
+                                                            <?php foreach ($occaion_menu as $occ_menu) { ?>
+                                                            <li>
+                                                                <a  href="search-list.php?occ_ids=<?= $occ_menu['id']; ?>" target="_self"><?= $occ_menu['name'] ?> </a>
+                                                            </li>
+                                                            <?php  } ?>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="col-md-4" style="<?= ($display_size ==0)?'display:none;':''; ?>" >
+                                                <div class="akasha-listitem style-01">
+                                                    <div class="listitem-inner">
+
+                                                        <ul class="listitem-list">
+                                                            <?php foreach ($display_type_menu as $dis_menu) { ?>
+                                                            <li>
+                                                                <a  target="_self" class="title"><?= $dis_menu['name']; ?>  </a>
+                                                            </li>
+                                                            <?php  } ?>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li id="menu-item-237"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-237 parent">
                                     <a class="akasha-menu-item-title" title="Pages" href="contact_us.php">Contact Us</a>

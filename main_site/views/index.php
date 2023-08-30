@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php include("../controllers/DBConnect.php");
-
+echo "Not in online"; die;
 $db_con= new DBConnect();
 //echo $db_con->resizeImage();die;
 $result=$db_con->getBestSellers();
-$occaion_master=$db_con->getOccassionMaster();
+$occaion_master=$db_con->getOccassionMaster(1);
 $display_list_type=$db_con->getDisplayType();
 $best_sellers=$result['product_list'];
 
